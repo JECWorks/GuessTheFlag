@@ -19,6 +19,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
                 .padding(50)
                 .background(.ultraThinMaterial)
+                .cornerRadius(50.0)
         }
         .ignoresSafeArea()
     }
