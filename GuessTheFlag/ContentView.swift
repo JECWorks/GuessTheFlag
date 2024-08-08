@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showingAlert = false
+
     func executeDelete() {
         print("Now deleting")
     }
@@ -38,6 +40,15 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .background(.blue)
             }
+            Button("Show Alert") {
+                        showingAlert = true
+                    }
+                    .alert("Important message", isPresented: $showingAlert) {
+                        Button("Delete", role: .destructive) { }
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        Text("Please read this.")
+                    }
         }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .foregroundColor(.white)
