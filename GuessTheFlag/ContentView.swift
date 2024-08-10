@@ -25,7 +25,7 @@ struct ContentView: View {
         ZStack {
             RadialGradient(stops: [
                 .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
-                .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
+                .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.6),
             ], center: .top, startRadius: 200, endRadius: 700)
                 .ignoresSafeArea()
             
@@ -93,7 +93,7 @@ struct ContentView: View {
                 score += 1
                 tries += 1
             } else {
-                scoreTitle = "Wrong, choice!"
+                scoreTitle = "Wrong, choice! That's the flag of \(countries[number])"
                 tries += 1
             }
             
