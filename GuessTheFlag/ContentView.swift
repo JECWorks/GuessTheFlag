@@ -13,6 +13,10 @@ struct ContentView: View {
 
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var score = 0
+    @State private var tries = 0
+    
+    let maxTries = 8
 
     func executeDelete() {
         print("Now deleting")
@@ -59,7 +63,7 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
-                Text("Score: ???")
+                Text("Score: \(score)")
                     .foregroundStyle(.white)
                     .font(.title.bold())
                 
@@ -68,19 +72,38 @@ struct ContentView: View {
             .padding()
         }
         .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continue", action: askQuestion)
+            if tries < maxTries {
+                Button("Continue", action: askQuestion)
+            } else {
+                Button ("New Game", action: resetGame)
+            }
         } message: {
-            Text("Your score is ???")
-        }
-    }
-    func flagTapped(_ number: Int) {
-        if number == correctAnswer {
-            scoreTitle = "Correct"
-        } else {
-            scoreTitle = "Wrong"
+            if tries < maxTries {
+                Text("Your score is \(score) out of \(tries)")
+            } else {
+                Text("Game over! Your final score is \(score) out of \(tries)")
+            }
         }
         
-        showingScore = true
+    }
+    func flagTapped(_ number: Int) {
+        if tries < maxTries {
+            if number == correctAnswer {
+                scoreTitle = "Correct"
+                score += 1
+                tries += 1
+            } else {
+                scoreTitle = "Wrong, choice!"
+                tries += 1
+            }
+            
+            showingScore = true
+        }
+        
+        if tries >= maxTries {
+            scoreTitle = "Game Over"
+            showingScore = true
+        }
     }
     
     func askQuestion () {
@@ -88,7 +111,16 @@ struct ContentView: View {
         correctAnswer = Int.random(in: 0...2)
         
     }
+    
+    func resetGame() {
+    score = 0
+    tries = 0
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
 }
+
+
 
 #Preview {
     ContentView()
